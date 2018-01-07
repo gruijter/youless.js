@@ -1,0 +1,26 @@
+{
+  "name": "youless",
+  "version": "1.0.0",
+  "description": "Node module to interface with Youless energy monitor devices (LS110 and LS120)",
+  "main": "youless.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gruijter/youless.js.git"
+  },
+  "keywords": [
+    "youless",
+    "ls112",
+    "ls120",
+    "enery",
+    "monitor"
+  ],
+  "author": "gruijter@hotmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gruijter/youless.js/issues"
+  },
+  "homepage": "https://github.com/gruijter/youless.js#readme"
+}
