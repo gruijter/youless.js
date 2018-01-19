@@ -1,6 +1,6 @@
 {
   "name": "youless",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node module to interface with Youless energy monitor devices (LS110 and LS120)",
   "main": "youless.js",
   "scripts": {
