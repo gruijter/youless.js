@@ -1,6 +1,6 @@
 {
   "name": "youless",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Node module to interface with Youless energy monitor devices (LS110 and LS120)",
   "main": "youless.js",
   "scripts": {
@@ -12,12 +12,14 @@
   },
   "keywords": [
     "youless",
-    "ls112",
+    "ls110",
     "ls120",
-    "enery",
-    "monitor"
+    "energy",
+    "monitor",
+    "DSMR"
   ],
-  "author": "gruijter@hotmail.com",
+  "author": "Robin de Gruijter (gruijter@hotmail.com)",
+  "copyright": "Robin de Gruijter (gruijter@hotmail.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gruijter/youless.js/issues"
