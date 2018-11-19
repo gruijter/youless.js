@@ -1,15 +1,20 @@
 {
   "name": "youless",
-  "version": "1.1.0",
-  "description": "Node module to interface with Youless energy monitor devices (LS110 and LS120)",
+  "version": "2.0.0",
+  "description": "Node package to interface with Youless energy monitor devices (LS110 and LS120)",
   "main": "youless.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js",
+		"generate-docs": "jsdoc --configure .jsdoc.json --verbose"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gruijter/youless.js.git"
   },
+	"directories": {
+		"doc": "docs",
+		"test": "test"
+	},
   "keywords": [
     "youless",
     "ls110",
@@ -18,11 +23,12 @@
     "monitor",
     "DSMR"
   ],
-  "author": "Robin de Gruijter (gruijter@hotmail.com)",
-  "copyright": "Robin de Gruijter (gruijter@hotmail.com)",
-  "license": "ISC",
+  "author": "Robin de Gruijter <gruijter@hotmail.com>",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/gruijter/youless.js/issues"
   },
-  "homepage": "https://github.com/gruijter/youless.js#readme"
+  "homepage": "https://github.com/gruijter/youless.js#readme",
+  "runkitExampleFilename": "test/runkitTest.js"
 }
+

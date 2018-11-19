@@ -1,0 +1,106 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+	License, v. 2.0. If a copy of the MPL was not distributed with this
+	file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+	Copyright 2017, 2018, Robin de Gruijter <gruijter@hotmail.com> */
+
+// INSTRUCTIONS FOR TESTING FROM DESKTOP:
+// install node (https://nodejs.org)
+// install this package: > npm i youless
+// run the test: > npm test [password]
+
+'use strict';
+
+const YoulessSession = require('../youless.js');
+const { version } = require('../package.json');
+// const util = require('util');
+
+let log = [];
+
+const youless = new YoulessSession();
+
+// function to setup the router session
+async function setupSession(password, host, port) {
+	try {
+		log.push('===========================================');
+		log.push(`starting test on Youless package version ${version}`);
+		youless.password = password || youless.password;
+		youless.host = host || youless.host;
+		youless.port = port || youless.port;
+	}	catch (error) {
+		log.push(error);
+		youless.password = '*****';
+		log.push(youless);
+	}
+}
+
+async function doTest() {
+	try {
+		// discover youless devices in the network
+		log.push('trying to discover youless devices');
+		const devices = await youless.discover();
+		log.push(devices);
+
+		// if a password is set you need to login. Optional use of password, host and port will override previous settings
+		log.push('trying to login');
+		const loggedIn = await youless.login();
+		log.push(loggedIn);
+		log.push(youless);
+
+		// get the model name, firmware level, mac address and host address
+		log.push('trying to get info2');
+		const info2 = await youless.getInfo2();
+		log.push(info2);
+
+		// get basic power readings
+		log.push('trying to get basic power readings');
+		const basicStatus = await youless.getBasicStatus();
+		log.push(basicStatus);
+
+		// get analogue and P1 power, S0 and gas meter readings (not available in LS110)
+		log.push('trying to get advanced power readings (LS120 only)');
+		const advancedStatus = await youless.getAdvancedStatus();
+		log.push(advancedStatus);
+
+		// synchronize the device time
+		log.push('trying to set the device time');
+		const dateTime = await youless.syncTime();
+		log.push(dateTime);
+
+		// // set the meter type to D(igital) or A(nalogue)
+		// await youless.setMeterType('a');
+
+		// // set the S0 counter value (in KwH)
+		// await youless.setS0Counter(12345);
+
+		// // set the S0 pulses per KwH value NOTE: also resets powerPulses to 1000
+		// await youless.setS0Pulses(1000);
+
+		// // set the Power counter value (in KwH) NOTE: also resets powerPulses to 1000
+		// await youless.setPowerCounter(12345);
+
+		// // set the Power pulses per KwH value
+		// // NOTE: must be performed AFTER setPowerCounter and setS0Pulses
+		// // NOTE: will be automatically overwritten by P1 net value
+		// await youless.setPowerPulses(1000);
+
+		// // reboot the youless device
+		// await youless.reboot();
+
+	}	catch (error) {
+		log.push(error);
+		youless.password = '*****';
+		log.push(youless);
+	}
+}
+
+exports.test = async (password, host, port) => {
+	log = [];	// empty the log
+	try {
+		await setupSession(password, host, port);
+		await doTest();
+		return Promise.resolve(log);
+	}	catch (error) {
+		return Promise.resolve(log);
+	}
+};
