@@ -39,24 +39,26 @@ To install the netgear package:
 ```
 
 ### Test:
-From the folder in which you installed the netgear package, just run this command.
+From the folder in which you installed the netgear package, just run below command. If you have no password set in the device, use `''` as password. If you do not know the ip address, use `''` to attempt autodiscovery.
 ```
-> npm test myPassword
+> npm test devicePassword deviceIp
 ```
-If you have no password set in the device, you can leave out 'myPassword'.
 
 
 ### Quickstart:
 
 ```
-// create a youless session, login to device (will also discover the ip address), fetch basic power info
+// create a youless session, login to device, fetch basic power info
 	const Youless = require('youless');
 
 	const youless = new Youless();
 
 	async function getPower() {
 		try {
-			await youless.login('myPassword');	// leave password empty if not set
+			// fill in the password of the device. Use '' if no password is set in the device
+			// fill in the ip address of the device, e.g. '192.168.1.50'
+			// do not fill in an ip address if you want to autodiscover the device during login
+			await youless.login('devicePassword', 'deviceIp');
 			const powerInfo = await youless.getBasicInfo();
 			console.log(powerInfo);
 		} catch (error) {

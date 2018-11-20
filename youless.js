@@ -8,6 +8,7 @@ const dns = require('dns');
 
 const defaultPort = 80;	// alternatives: 32848, 16464, 49232
 const defaultPassword = '';
+const defaultCookie = ['undefined'];
 // const youlessMacId = '72:b8:ad:14';
 
 // available for LS110 and LS120:
@@ -61,7 +62,10 @@ function toEpoch(time) {	// yymmddhhmm, e.g. 1712282000 > 1514487600
 
 	async function getPower() {
 		try {
-			await youless.login('myPassword');	// leave password empty if not set
+			// fill in the password of the device. Use '' if no password is set in the device
+			// fill in the ip address of the device, e.g. '192.168.1.50'
+			// do not fill in an ip address if you want to autodiscover the device during login
+			await youless.login('devicePassword', 'deviceIp');
 			const powerInfo = await youless.getBasicInfo();
 			console.log(powerInfo);
 		} catch (error) {
@@ -83,7 +87,7 @@ class Youless {
 		this.host = host;
 		this.port = port || defaultPort;
 		this.loggedIn = password === defaultPassword;
-		this.cookie = ['undefined'];
+		this.cookie = defaultCookie;
 		this.timeout = 4000;	// milliseconds for http request
 		this.info = {
 			model: undefined,			// will be filled automatically on login() for LS120, or on getInfo2() for LS110
@@ -151,16 +155,18 @@ class Youless {
 		try {
 			this.password = password || this.password;
 			this.host = host || await this.host;
-			this.port = port || await this.port;
+			this.port = port || this.port;
 			if (!this.host || this.host === '' || !this.port) {
 				await this.discover()
 					.catch(() => {
 						throw Error('Cannot login: host IP and/or port not set');
 					});
 			}
-			const result = await this._makeRequest(loginPath + this.password);
-			if (result.headers['set-cookie']) {
-				this.cookie = result.headers['set-cookie'];
+			if (this.password !== '') {
+				const result = await this._makeRequest(loginPath + this.password);
+				// if (result.headers['set-cookie']) {
+				// 	this.cookie = result.headers['set-cookie'];
+				// }
 			}
 			this.loggedIn = true;
 			return Promise.resolve(this.loggedIn);
@@ -336,16 +342,15 @@ class Youless {
 	}
 
 	/**
-	* Set meter type to D(igital) or A(nalogue). Login is required if a password is set in the device.
-	* @param {string} value - The url or ip address of the device.
+	* Set meter type to D(igital) or A(nalog).
+	* @param {string} value - The meter type A(analog) or D(igital).
 	* @returns {Promise<finished>}
 	*/
 	async setMeterType(value) {
-		// util.log('youless set Meter Type requested');
 		try {
 			const validTypes = ['d', 'D', 'a', 'A'];
 			if (!(typeof value === 'string') || !(validTypes.indexOf(value[0]) > -1)) {
-				throw Error('Meter Type can only be D(igital) or A(nalogue)');
+				throw Error('Meter Type can only be D(igital) or A(nalog)');
 			}
 			await this._makeRequest(setMeterTypePath + value);
 			return Promise.resolve(true);
@@ -414,7 +419,7 @@ class Youless {
 	}
 
 	/**
-	* Synchronize the device time from the internet
+	* Synchronize the device time with the internet
 	* @returns {Promise<dateTime>}
 	*/
 	async syncTime() {
@@ -428,11 +433,10 @@ class Youless {
 	}
 
 	/**
-	* Sreboot the youless device
+	* Reboot the youless device
 	* @returns {Promise<finished>}
 	*/
 	async reboot() {
-		// util.log('youless reboot requested');
 		try {
 			await this._makeRequest(rebootPath);
 			return Promise.resolve(true);
@@ -450,7 +454,7 @@ class Youless {
 				'Content-Length': 0,
 				Connection: 'keep-alive',
 			};
-			if (!action.includes(loginPath) && !action.includes(discoverPath)) {
+			if (!action.includes(loginPath) && !action.includes(discoverPath) && this.cookie !== defaultCookie) {
 				headers.Cookie = this.cookie;
 			}
 			const options = {

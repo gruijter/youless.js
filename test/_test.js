@@ -24,29 +24,27 @@ async function setupSession(password, host, port) {
 	try {
 		log.push('===========================================');
 		log.push(`starting test on Youless package version ${version}`);
-		youless.password = password || youless.password;
-		youless.host = host || youless.host;
-		youless.port = port || youless.port;
+		if (!host) {
+			// discover youless devices in the network
+			log.push('no host was set: trying to discover youless devices');
+			const devices = await youless.discover();
+			log.push(devices);
+		}
+		// if a password is set you need to login. Optional use of password, host and port will override previous settings
+		log.push('trying to login');
+		const loggedIn = await youless.login(password, youless.host, port);
+		log.push(`login successful: ${loggedIn}`);
+		return Promise.resolve(youless);
 	}	catch (error) {
 		log.push(error);
 		youless.password = '*****';
 		log.push(youless);
+		return Promise.reject(error);
 	}
 }
 
 async function doTest() {
 	try {
-		// discover youless devices in the network
-		log.push('trying to discover youless devices');
-		const devices = await youless.discover();
-		log.push(devices);
-
-		// if a password is set you need to login. Optional use of password, host and port will override previous settings
-		log.push('trying to login');
-		const loggedIn = await youless.login();
-		log.push(loggedIn);
-		log.push(youless);
-
 		// get the model name, firmware level, mac address and host address
 		log.push('trying to get info2');
 		const info2 = await youless.getInfo2();
@@ -58,8 +56,8 @@ async function doTest() {
 		log.push(basicStatus);
 
 		// get analogue and P1 power, S0 and gas meter readings (not available in LS110)
-		log.push('trying to get advanced power readings (LS120 only)');
-		const advancedStatus = await youless.getAdvancedStatus();
+		log.push('trying to get advanced power readings (LS120-EL only)');
+		const advancedStatus = await youless.getAdvancedStatus().catch(() => undefined);
 		log.push(advancedStatus);
 
 		// synchronize the device time

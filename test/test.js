@@ -17,11 +17,28 @@ const _test = require('./_test.js');
 
 console.log('Testing now. Hang on.....');
 
-_test.test(
-	process.argv[2], // password
-	process.argv[3], // host
-	process.argv[4], // port
-)
+let password = process.argv[2];
+let host = process.argv[3];
+let port = process.argv[4];
+
+if (password) {
+	if (password === '' || password === "" || password === "''") {
+		password = '';
+	} else {
+		password = password.replace(/'/g, '').replace(/"/g, '');
+	}
+}
+
+if (host) {
+	host = host.replace(/'/g, '').replace(/"/g, '');
+}
+
+if (port) {
+	port = port.toString().replace(/'/g, '').replace(/"/g, '');
+	port = Number(port);
+}
+
+_test.test(password, host, port)
 	.then((log) => {
 		for (let i = 0; i < (log.length); i += 1) {
 			console.log(log[i]);
