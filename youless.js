@@ -111,13 +111,16 @@ class Youless {
 			const servers = dns.getServers() || [];	// get the IP address of all routers in the LAN
 			const hostsToTest = [];	// make an array of all host IP's in the LAN
 			servers.map((server) => {
+				const splitServer = server.split('.').slice(0, 3);
+				const reducer = (accumulator, currentValue) => `${accumulator}.${currentValue}`;
+				const segment = splitServer.reduce(reducer);
 				for (let host = 1; host <= 254; host += 1) {
-					const ipToTest = server.replace(/\.\d+$/, `.${host}`);
+					const ipToTest = `${segment}.${host}`;
 					hostsToTest.push(ipToTest);
 				}
 				return hostsToTest;
 			});
-			this.timeout = 3500;	// temporarily set http timeout to 3.5 seconds
+			this.timeout = 3000;	// temporarily set http timeout to 3.5 seconds
 			const allHostsPromise = hostsToTest.map(async (hostToTest) => {
 				const result = await this.getInfo(hostToTest)
 					.catch(() => undefined);
