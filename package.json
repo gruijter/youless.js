@@ -1,6 +1,6 @@
 {
   "name": "youless",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Node package to interface with Youless energy monitor devices (LS110 and LS120)",
   "main": "youless.js",
   "scripts": {
@@ -31,4 +31,3 @@
   "homepage": "https://github.com/gruijter/youless.js#readme",
   "runkitExampleFilename": "test/runkitTest.js"
 }
-

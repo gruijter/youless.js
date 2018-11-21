@@ -24,15 +24,17 @@ async function setupSession(password, host, port) {
 	try {
 		log.push('===========================================');
 		log.push(`starting test on Youless package version ${version}`);
+		let testHost = host;
 		if (!host) {
 			// discover youless devices in the network
 			log.push('no host was set: trying to discover youless devices');
 			const devices = await youless.discover();
+			testHost = youless.host;
 			log.push(devices);
 		}
 		// if a password is set you need to login. Optional use of password, host and port will override previous settings
 		log.push('trying to login');
-		const loggedIn = await youless.login(password, youless.host, port);
+		const loggedIn = await youless.login(password, testHost, port);
 		log.push(`login successful: ${loggedIn}`);
 		return Promise.resolve(youless);
 	}	catch (error) {

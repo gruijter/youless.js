@@ -106,6 +106,7 @@ class Youless {
 	*/
 	async discover() {
 		const timeoutBefore = this.timeout;
+		const hostBefore = this.host;
 		try {
 			const servers = dns.getServers() || [];	// get the IP address of all routers in the LAN
 			const hostsToTest = [];	// make an array of all host IP's in the LAN
@@ -116,7 +117,7 @@ class Youless {
 				}
 				return hostsToTest;
 			});
-			this.timeout = 3000;	// temporarily set http timeout to 3 seconds
+			this.timeout = 3500;	// temporarily set http timeout to 3.5 seconds
 			const allHostsPromise = hostsToTest.map(async (hostToTest) => {
 				const result = await this.getInfo(hostToTest)
 					.catch(() => undefined);
@@ -127,7 +128,7 @@ class Youless {
 			this.timeout = timeoutBefore;	// reset the timeout
 			if (discoveredHosts[0]) {
 				this.host = discoveredHosts[0].host;
-			}
+			} else { throw Error('No device discovered. Please provide host ip manually'); }
 			/**
 			* @typedef discoveredHost
 			* @description discoveredHosts is only available for LS120
@@ -137,6 +138,7 @@ class Youless {
 			*/
 			return Promise.resolve(discoveredHosts);
 		} catch (error) {
+			this.host = hostBefore;
 			this.timeout = timeoutBefore;
 			this.lastResponse = error;
 			return Promise.reject(error);
@@ -163,10 +165,7 @@ class Youless {
 					});
 			}
 			if (this.password !== '') {
-				const result = await this._makeRequest(loginPath + this.password);
-				// if (result.headers['set-cookie']) {
-				// 	this.cookie = result.headers['set-cookie'];
-				// }
+				await this._makeRequest(loginPath + this.password);
 			}
 			this.loggedIn = true;
 			return Promise.resolve(this.loggedIn);
@@ -243,7 +242,7 @@ class Youless {
 		try {
 			const result = await this._makeRequest(basicStatusPath);
 			const basicStatus = JSON.parse(result.body);
-			if (!basicStatus.con) {
+			if (!Object.prototype.hasOwnProperty.call(basicStatus, 'con')) {
 				throw Error('no status information found');
 			}
 			if (Object.keys(basicStatus).length < 8) {
