@@ -3,7 +3,8 @@
 'use strict';
 
 const http = require('http');
-const dns = require('dns');
+// const dns = require('dns');
+const os = require('os');
 // const util = require('util');
 
 const defaultPort = 80;	// alternatives: 32848, 16464, 49232
@@ -49,12 +50,12 @@ function toEpoch(time) {	// yymmddhhmm, e.g. 1712282000 > 1514487600
 	return tm.getTime() / 1000 || 0;
 }
 
-/** Class representing a session with a youless device.
-* @property {string} password - The login password.
-* @property {string} host - The url or ip address of the device.
-* @property {number} port - The port of the device.
-* @property {number} timeout - http timeout in milliseconds.
-* @property {boolean} loggedIn - login state.
+/**
+* @class Youless
+* @classdesc Class representing a session with a youless device.
+* @param {string} [password = ''] - The login password.
+* @param {string} [host] - The url or ip address of the router. Will be automatically discovered on first login.
+* @param {number} [port = 80] - The port of the device
 * @example // create a youless session, login to device, fetch basic power info
 	const Youless = require('youless');
 
@@ -74,14 +75,12 @@ function toEpoch(time) {	// yymmddhhmm, e.g. 1712282000 > 1514487600
 	}
 
 	getPower();
+
+	* @property {number} timeout - http timeout in milliseconds.
+	* @property {boolean} loggedIn - login state.
 	*/
+
 class Youless {
-	/**
-	* Create a youless session.
-	* @param {string} [password = ''] - The login password.
-	* @param {string} [host] - The url or ip address of the router. Will be automatically discovered on first login.
-	* @param {number} [port = 80] - The port of the device
-	*/
 	constructor(password, host, port) {
 		this.password = password || defaultPassword;
 		this.host = host;
@@ -89,31 +88,54 @@ class Youless {
 		this.loggedIn = password === defaultPassword;
 		this.cookie = defaultCookie;
 		this.timeout = 4000;	// milliseconds for http request
-		this.info = {
-			model: undefined,			// will be filled automatically on login() for LS120, or on getInfo2() for LS110
-			mac: undefined,				// will be filled automatically on login() for LS120, or on getInfo2() for LS110
-			firmware: undefined,		// will be filled automatically on getInfo2()
-			hasP1Meter: undefined,		// will be made true if p1 data is received in this session
-			hasGasMeter: undefined,		// will be made true if gas data is received in this session
-			hasS0Meter: undefined,		// will be made true if s0 data is received in this session, also means fw >= 1.4
+		this.info = {	// will be filled automatically on getInfo2()
+			model: undefined,
+			mac: undefined,
+			firmware: undefined,
+			host: this.host,
+		};
+		this.hasMeter = {	// will be filled automatically on getAdvancedStatus()
+			p1: undefined,
+			gas: undefined,
+			s0: undefined,
 		};
 		this.lastResponse = undefined;
 	}
 
 	/**
-	* Discovers a youless device in the network. Also sets the first discovered ip address for this session.
-	* @returns {Promise<discoveredHost[]>} Array with info on discovered routers, including host ip address.
+	* @typedef info
+	* @description device information
+	* @property {string} model e.g. 'LS120'
+	* @property {string} mac  e.g. '72:b8:ad:14:16:2d'
+	* @property {string} firmware  e.g. '1.4.1-EL'
+	* @property {string} host e.g. '192.168.1.10'
+	*/
+
+	/**
+	* Discovers LS120 devices in the local network, and LS110 devices if no password is set in the device.
+	* Also sets the ip address of the first discovered device as host address for this session.
+	* @returns {Promise<info[]>} Array with info on discovered LS120 devices, including host ip address.
 	*/
 	async discover() {
 		const timeoutBefore = this.timeout;
 		const hostBefore = this.host;
 		try {
-			const servers = dns.getServers() || [];	// get the IP address of all routers in the LAN
 			const hostsToTest = [];	// make an array of all host IP's in the LAN
+			const servers = [];
+			// const servers = dns.getServers() || [];	// get the IP address of all routers in the LAN
+			const ifaces = os.networkInterfaces();	// get ip address info from all network interfaces
+			Object.keys(ifaces).forEach((ifName) => {
+				ifaces[ifName].forEach((iface) => {
+					if (iface.family === 'IPv4' && !iface.internal) {
+						servers.push(iface.address);
+					}
+				});
+			});
 			servers.map((server) => {
 				const splitServer = server.split('.').slice(0, 3);
 				const reducer = (accumulator, currentValue) => `${accumulator}.${currentValue}`;
 				const segment = splitServer.reduce(reducer);
+				if (segment.slice(0, 3) === '127') { return undefined; }
 				for (let host = 1; host <= 254; host += 1) {
 					const ipToTest = `${segment}.${host}`;
 					hostsToTest.push(ipToTest);
@@ -132,13 +154,6 @@ class Youless {
 			if (discoveredHosts[0]) {
 				this.host = discoveredHosts[0].host;
 			} else { throw Error('No device discovered. Please provide host ip manually'); }
-			/**
-			* @typedef discoveredHost
-			* @description discoveredHosts is only available for LS120
-			* @property {string} model e.g. 'LS120'
-			* @property {string} mac  e.g. '72:b8:ad:14:16:2d'
-			* @property {string} host e.g. '192.168.1.10'
-			*/
 			return Promise.resolve(discoveredHosts);
 		} catch (error) {
 			this.host = hostBefore;
@@ -154,7 +169,7 @@ class Youless {
 	* @param {string} [password] - The login password.
 	* @param {string} [host] - The url or ip address of the device.
 	* @param {number} [port] - The  port of the device.
-	* @returns {Promise<loggedIn>} The loggedIn state.
+	* @returns {Promise<Youless.loggedIn>} The loggedIn state.
 	*/
 	async login(password, host, port) {
 		try {
@@ -179,60 +194,79 @@ class Youless {
 	}
 
 	/**
-	* Get device information without need for credentials. NOTE: Only works for LS120
+	* Get device information. NOTE: Only works for LS120, or if logged in, or when no password is set in device
 	* @param {string} [host] - The url or ip address of the device.
 	* @returns {Promise<info>}
 	*/
 	async getInfo(host) {
-		const hostBefore = this.host;
-		this.host = host || hostBefore;
 		try {
-			const result = await this._makeRequest(discoverPath);
-			const info = JSON.parse(result.body);
-			if (!info.model) {
-				throw Error('no youless model found');
+			const info = this.info;
+			let info1;
+			// first try info2 (only available when loggedIn)
+			const info2 = await this._getInfo2(host || this.host)
+				.catch(() => undefined);
+			if (info2) {
+				info.model = info2.model;
+				info.mac = info2.mac;
+				info.firmware = info2.firmware;
+				info.host = info2.host;
+			} else {
+				// now try info1 (only available for LS120)
+				info1 = await this._getInfo1(host || this.host)
+					.catch(() => undefined);
+				if (info1) {
+					info.model = info1.model;
+					info.mac = info1.mac;
+					info.host = info1.host;
+				}
 			}
-			info.host = host || hostBefore;
-			this.host = hostBefore;
-			/**
-			* @typedef info
-			* @description info is only available for LS120
-			* @property {string} model e.g. 'LS120'
-			* @property {string} mac  e.g. '72:b8:ad:14:16:2d'
-			*/
+			if (!info1 && !info2) {
+				throw Error('Info could not be retrieved from device');
+			}
+			this.info = info;
 			return Promise.resolve(info);
 		} catch (error) {
 			return Promise.reject(error);
 		}
 	}
 
-	/**
-	* Get device information. NOTE: Login is required if a password is set in the device.
-	* @param {string} [host] - The url or ip address of the device.
-	* @returns {Promise<info2>}
-	*/
-	async getInfo2(host) {
+	// Get device information without need for credentials. NOTE: Only works for LS120
+	async _getInfo1(host) {
 		const hostBefore = this.host;
-		this.host = host || hostBefore;
 		try {
-			this.loggedIn = true;
+			this.host = host || hostBefore;
+			const result = await this._makeRequest(discoverPath);
+			this.host = hostBefore;
+			const info1 = JSON.parse(result.body);
+			if (!info1.model) {
+				throw Error('no youless model found');
+			}
+			info1.host = host || hostBefore;
+			return Promise.resolve(info1);
+		} catch (error) {
+			this.host = hostBefore;
+			return Promise.reject(error);
+		}
+	}
+
+
+	// Get device information. NOTE: Login is required if a password is set in the device.
+	async _getInfo2(host) {
+		const hostBefore = this.host;
+		try {
+			// this.loggedIn = true;
 			const info2 = { };
+			this.host = host || hostBefore;
 			const res = await this._makeRequest(homePath);
 			const res2 = await this._makeRequest(networkPath);
+			this.host = hostBefore;
 			info2.model = res.body.match(regExModelResponse)[1];
 			info2.mac = res2.body.match(regExMacResponse)[1];
 			info2.firmware = res.body.match(regExFirmwareResponse)[1];
 			info2.host = host || hostBefore;
-			this.host = hostBefore;
-			/**
-			* @typedef info2
-			* @property {string} model e.g. 'LS120'
-			* @property {string} mac  e.g. '72:b8:ad:14:16:2d'
-			* @property {string} firmware  e.g. '1.4.1-EL'
-			* @property {string} host e.g. '192.168.1.10'
-			*/
 			return Promise.resolve(info2);
 		} catch (error) {
+			this.host = hostBefore;
 			return Promise.reject(error);
 		}
 	}
@@ -287,36 +321,33 @@ class Youless {
 			if (!advancedStatus.tm) {
 				throw Error('no status information found');
 			}
-			const minLength = (3 + (4 * this.info.hasP1Meter) + (this.info.hasGasMeter
-				*	(1 + (1 * this.info.hasS0Meter))) + (3 * this.info.hasS0Meter)) || 3;
+			const minLength = (3 + (4 * this.hasMeter.p1) + (this.hasMeter.gas
+				*	(1 + (1 * this.hasMeter.s0))) + (3 * this.hasMeter.s0)) || 3;
 			if (Object.keys(advancedStatus).length < minLength) {
-				this.info.hasP1Meter = undefined;
-				this.info.hasGasMeter = undefined;
-				this.info.hasS0Meter = undefined;
 				throw Error('incomplete status information');
 			}
 			if (advancedStatus.p1) {	// p1 meter connected
-				this.info.hasP1Meter = true;
+				this.hasMeter.p1 = true;
 			} else {	// no p1 meter available
-				this.info.hasP1Meter = false;
+				this.hasMeter.p1 = false;
 			}
 			if (advancedStatus.gts) {	// gas meter connected, and gas timestamp available
-				this.info.hasGasMeter = true;
+				this.hasMeter.gas = true;
 				advancedStatus.gtm = toEpoch(advancedStatus.gts);
 			} else if (advancedStatus.gas) {	// gas meter connected, no gas timestamp avialable (fw<1.4)
-				this.info.hasGasMeter = true;
+				this.hasMeter.gas = true;
 				advancedStatus.gts = 0;
 				advancedStatus.gtm = 0;
 			} else {	// no gas meter available
-				this.info.hasGasMeter = false;
+				this.hasMeter.gas = false;
 				advancedStatus.gas = 0;
 				advancedStatus.gts = 0;
 				advancedStatus.gtm = 0;
 			}
 			if (advancedStatus.ts0) {	// S0 meter available (fw>=v1.4)
-				this.info.hasS0Meter = true;
+				this.hasMeter.s0 = true;
 			} else {	// no S0 meter available (fw<1.4)
-				this.info.hasS0Meter = false;
+				this.hasMeter.s0 = false;
 				advancedStatus.ts0 = 0;
 				advancedStatus.ps0 = 0;
 				advancedStatus.cs0 = 0;
@@ -326,7 +357,7 @@ class Youless {
 			* @description advancedStatus is an object containing power information.
 			* @property {number} tm time of retrieving info. unix-time-format. e.g. 1542575626
 			* @property {number} pwr power consumption in Watt. e.g. 3030
-			* @property {number} ts0 time of the last S0 measurement. unix-time-format. e.g. 1542575626 NOTE: only for LS120 ^1.4 version firmware
+			* @property {number} [ts0] time of the last S0 measurement. unix-time-format. e.g. 1542575626 NOTE: only for LS120 ^1.4 version firmware
 			* @property {number} [cs0] counter of S0 input (KwH). e.g. 0 NOTE: only for LS120 ^1.4 version firmware
 			* @property {number} [ps0] computed S0 power. e.g. 0. NOTE: only for LS120 ^1.4 version firmware
 			* @property {number} p1 P1 consumption counter (low tariff). e.g. 16110.964
@@ -465,7 +496,7 @@ class Youless {
 				path: action,
 				headers,
 				method: 'GET',
-				'User-Agent': 'Youless.js Node Package',
+				'User-Agent': 'Youless.js',
 			};
 			const res = await this._makeHttpRequest(options, '');
 			this.lastResponse = res.body;
@@ -516,7 +547,7 @@ class Youless {
 				reject(Error('Connection timeout'));
 			});
 			req.once('error', (e) => {
-				this.lastResponse = e;	// e.g. ECONNREFUSED // ECONNRESET on wrong IP
+				this.lastResponse = e;	// e.g. ECONNREFUSED // ECONNRESET // EHOSTUNREACH on wrong IP
 				reject(e);
 			});
 		});

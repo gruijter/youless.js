@@ -22,6 +22,7 @@ let host = process.argv[3];
 let port = process.argv[4];
 
 if (password) {
+	// eslint-disable-next-line quotes
 	if (password === '' || password === "" || password === "''") {
 		password = '';
 	} else {

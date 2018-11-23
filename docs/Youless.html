@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getInfo2">getInfo2</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -132,75 +132,6 @@
 
         <tr>
             
-                <td class="name"><code>password</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The login password.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>host</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The url or ip address of the device.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>port</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The port of the device.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>timeout</code></td>
             
 
@@ -251,10 +182,6 @@
 
 
 
-
-<div class="description">
-    <p>Create a youless session.</p>
-</div>
 
 
 
@@ -472,7 +399,7 @@
 
     
 
-    <h4 class="name" id="discover"><span class="type-signature">(async) </span>discover<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;<a href="global.html#discoveredHost">discoveredHost</a>>>}</span></h4>
+    <h4 class="name" id="discover"><span class="type-signature">(async) </span>discover<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;<a href="global.html#info">info</a>>>}</span></h4>
 
     
 
@@ -519,7 +446,8 @@
 
 
 <div class="description">
-    <p>Discovers a youless device in the network. Also sets the first discovered ip address for this session.</p>
+    <p>Discovers LS120 devices in the local network, and LS110 devices if no password is set in the device.
+Also sets the ip address of the first discovered device as host address for this session.</p>
 </div>
 
 
@@ -548,7 +476,7 @@
 
         
 <div class="param-desc">
-    <p>Array with info on discovered routers, including host ip address.</p>
+    <p>Array with info on discovered LS120 devices, including host ip address.</p>
 </div>
 
 
@@ -559,7 +487,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;Array.&lt;<a href="global.html#discoveredHost">discoveredHost</a>>></span>
+<span class="param-type">Promise.&lt;Array.&lt;<a href="global.html#info">info</a>>></span>
 
 
     </dd>
@@ -814,7 +742,7 @@
 
 
 <div class="description">
-    <p>Get device information without need for credentials. NOTE: Only works for LS120</p>
+    <p>Get device information. NOTE: Only works for LS120, or if logged in, or when no password is set in device</p>
 </div>
 
 
@@ -925,165 +853,7 @@
 
     
 
-    <h4 class="name" id="getInfo2"><span class="type-signature">(async) </span>getInfo2<span class="signature">(host<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#info2">info2</a>>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Get device information. NOTE: Login is required if a password is set in the device.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>host</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The url or ip address of the device.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="global.html#info2">info2</a>></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="login"><span class="type-signature">(async) </span>login<span class="signature">(password<span class="signature-attributes">opt</span>, host<span class="signature-attributes">opt</span>, port<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;loggedIn>}</span></h4>
+    <h4 class="name" id="login"><span class="type-signature">(async) </span>login<span class="signature">(password<span class="signature-attributes">opt</span>, host<span class="signature-attributes">opt</span>, port<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Youless.loggedIn>}</span></h4>
 
     
 
@@ -1298,7 +1068,7 @@ If host is not set, login will try to auto discover it.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;loggedIn></span>
+<span class="param-type">Promise.&lt;Youless.loggedIn></span>
 
 
     </dd>
@@ -2254,7 +2024,7 @@ NOTE: will be automatically overwritten by P1 net value</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Nov 20 2018 22:47:36 GMT+0100 (West-Europa (standaardtijd)) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 23 2018 22:34:50 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -11,6 +11,7 @@
 
 'use strict';
 
+const os = require('os');
 const YoulessSession = require('../youless.js');
 const { version } = require('../package.json');
 // const util = require('util');
@@ -22,8 +23,10 @@ const youless = new YoulessSession();
 // function to setup the router session
 async function setupSession(password, host, port) {
 	try {
-		log.push('===========================================');
-		log.push(`starting test on Youless package version ${version}`);
+		log.push('========== STARTING TEST ==========');
+		log.push(`Node version: ${process.version}`);
+		log.push(`Youless package version: ${version}`);
+		log.push(`OS: ${os.platform()} ${os.release()}`);
 		let testHost = host;
 		if (!host) {
 			// discover youless devices in the network
@@ -48,9 +51,9 @@ async function setupSession(password, host, port) {
 async function doTest() {
 	try {
 		// get the model name, firmware level, mac address and host address
-		log.push('trying to get info2');
-		const info2 = await youless.getInfo2();
-		log.push(info2);
+		log.push('trying to get info');
+		const info = await youless.getInfo();
+		log.push(info);
 
 		// get basic power readings
 		log.push('trying to get basic power readings');
@@ -61,6 +64,8 @@ async function doTest() {
 		log.push('trying to get advanced power readings (LS120-EL only)');
 		const advancedStatus = await youless.getAdvancedStatus().catch(() => undefined);
 		log.push(advancedStatus);
+		log.push('Available digital meters:');
+		log.push(youless.hasMeter);
 
 		// synchronize the device time
 		log.push('trying to set the device time');
