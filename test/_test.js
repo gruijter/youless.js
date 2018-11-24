@@ -67,6 +67,21 @@ async function doTest() {
 		log.push('Available digital meters:');
 		log.push(youless.hasMeter);
 
+		// get electricity Power log of the present month
+		log.push('trying to get historic Power log of present month');
+		const powerLog = await youless.getPowerlog().catch(() => undefined);
+		log.push(powerLog);
+
+		// get gas log of the present month
+		log.push('trying to get historic gas log of present month');
+		const gasLog = await youless.getGaslog().catch(() => undefined);
+		log.push(gasLog);
+
+		// get S0 log of the present month
+		log.push('trying to get historic S0 log of present month');
+		const s0Log = await youless.getS0log().catch(() => undefined);
+		log.push(s0Log);
+
 		// synchronize the device time
 		log.push('trying to set the device time');
 		const dateTime = await youless.syncTime();

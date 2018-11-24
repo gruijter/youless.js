@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -476,7 +476,7 @@ Also sets the ip address of the first discovered device as host address for this
 
         
 <div class="param-desc">
-    <p>Array with info on discovered LS120 devices, including host ip address.</p>
+    <p>Array with info on discovered devices, including host ip address.</p>
 </div>
 
 
@@ -695,6 +695,216 @@ Also sets the ip address of the first discovered device as host address for this
 
     
 
+    <h4 class="name" id="getGaslog"><span class="type-signature">(async) </span>getGaslog<span class="signature">(resolution<span class="signature-attributes">opt</span>, period<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#gasLog">gasLog</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Get historic gas usage data. Note: Only available for LS120.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resolution</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'Days'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The interval of logdata in: T(enminutes), H(ours) or D(ays)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>period</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>this month</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The period that can be selected for historic data depends on the selected resolution:</p>
+<ul>
+<li>Tenminutes: period 1 (this day) - 30 (30 days ago)</li>
+<li>Hours: period 1 (this day) - 70 (70 days ago)</li>
+<li>Days: period 1 (January) - 12 (December)</li>
+</ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#gasLog">gasLog</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
     <h4 class="name" id="getInfo"><span class="type-signature">(async) </span>getInfo<span class="signature">(host<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#info">info</a>>}</span></h4>
 
     
@@ -840,6 +1050,428 @@ Also sets the ip address of the first discovered device as host address for this
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#info">info</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getPowerlog"><span class="type-signature">(async) </span>getPowerlog<span class="signature">(resolution<span class="signature-attributes">opt</span>, period<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#powerLog">powerLog</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Get historic electricity Power data.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resolution</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'Days'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The interval of logdata in: M(inutes), T(enminutes), H(ours) or D(ays)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>period</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>this month</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The period that can be selected for historic data depends on the device type and selected resolution:</p>
+<ul>
+<li>Minutes: period 1 (this hour) - 20 (20 hours ago) (LS110: max 2 hours ago)</li>
+<li>Tenminutes: period 1 (this day) - 30 (30 days ago) (LS110: max 3 days ago)</li>
+<li>Hours: period 1 (this day) - 70 (70 days ago) (LS110: max 7 days ago)</li>
+<li>Days: period 1 (January) - 12 (December)</li>
+</ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#powerLog">powerLog</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getS0log"><span class="type-signature">(async) </span>getS0log<span class="signature">(resolution<span class="signature-attributes">opt</span>, period<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#s0Log">s0Log</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Get historic S0 Power data. Note: Only available for LS120.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resolution</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'Days'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The interval of logdata in: M(inutes), T(enminutes), H(ours) or D(ays)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>period</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>this month</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The period that can be selected for historic data depends on the selected resolution:</p>
+<ul>
+<li>Minutes: period 1 (this hour) - 20 (20 hours ago)</li>
+<li>Tenminutes: period 1 (this day) - 30 (30 days ago)</li>
+<li>Hours: period 1 (this day) - 70 (70 days ago)</li>
+<li>Days: period 1 (January) - 12 (December)</li>
+</ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#s0Log">s0Log</a>></span>
 
 
     </dd>
@@ -1519,7 +2151,6 @@ If host is not set, login will try to auto discover it.</p>
 
 <div class="description">
     <p>Set the Power pulses per KwH value
-NOTE: also resets powerPulses to 1000
 NOTE: must be performed AFTER setPowerCounter and setS0Pulses
 NOTE: will be automatically overwritten by P1 net value</p>
 </div>
@@ -1912,7 +2543,7 @@ NOTE: will be automatically overwritten by P1 net value</p>
 
     
 
-    <h4 class="name" id="syncTime"><span class="type-signature">(async) </span>syncTime<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;dateTime>}</span></h4>
+    <h4 class="name" id="syncTime"><span class="type-signature">(async) </span>syncTime<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#dateTime">dateTime</a>>}</span></h4>
 
     
 
@@ -1995,7 +2626,7 @@ NOTE: will be automatically overwritten by P1 net value</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;dateTime></span>
+<span class="param-type">Promise.&lt;<a href="global.html#dateTime">dateTime</a>></span>
 
 
     </dd>
@@ -2024,7 +2655,7 @@ NOTE: will be automatically overwritten by P1 net value</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 23 2018 22:34:50 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Nov 24 2018 14:43:23 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

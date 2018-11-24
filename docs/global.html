@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -564,6 +564,13 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// advancedStatus information
+{ tm: 1543065732, net: 20289.512, pwr: 640, ts0: 1542562800, cs0: 12345, ps0: 0, p1: 16168.673,
+p2: 9942.712, n1: 1570.936, n2: 4250.937, gas: 6192.638, gts: 1811241400, gtm: 1543064400 }</code></pre>
+
+
 
             
                 
@@ -974,6 +981,265 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// basicStatus information
+{ cnt: ' 20289,512', pwr: 640, lvl: 62, dev: '(&amp;plusmn;0%)', det: '', con: 'OK',
+sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 1543065737.936 }</code></pre>
+
+
+
+            
+                
+<h4 class="name" id="dateTime">dateTime</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>string containing date and time e.g '24-11-18 14:22'</p>
+</div>
+
+
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="gasLog">gasLog</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>un</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the unit of the data 'm3' or 'L' (liter)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the date/time of the first log entry. e.g. '2018-11-01T00:00:00'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the entry interval delta in seconds. e.g. 86400 (= 1 day)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an array containing the log entries. Closing entry is always null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>contains historic gas usage data</p>
+</div>
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// daily gas usage in the month November
+	{
+		un: 'm3',
+		tm: '2018-11-01T00:00:00',
+		dt: 86400,
+		val: [' 5,580', ' 3,380', ' 4,350', ' 1,960', ' 3,130', ' 3,280', ' 2,500',
+		' 2,970', ' 3,780', ' 4,440', ' 2,860', ' 3,470', ' 2,300', ' 4,110',
+		' 2,940', ' 4,380', ' 4,860', ' 5,890', ' 5,480', ' 5,670', ' 3,790',
+		' 6,390', ' 7,450', ' 3,380', ' 4,350', ' 1,960', ' 3,130', ' 3,780',
+		' 5,480', ' 5,670', null ]
+	}</code></pre>
+
+
 
             
                 
@@ -1155,6 +1421,394 @@
 
 
             
+                
+<h4 class="name" id="powerLog">powerLog</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>un</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the unit of the data 'Watt' or 'kWh'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the date/time of the first log entry. e.g. '2018-11-01T00:00:00'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the entry interval delta in seconds. e.g. 86400 (= 1 day)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an array containing the log entries. Closing entry is always null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>contains historic electricity Power data</p>
+</div>
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// daily power usage in the month November
+	{
+		un: 'kWh',
+		tm: '2018-11-01T00:00:00',
+		dt: 86400,
+		val: [' 24,770', ' 14,930', ' 16,270', ' 10,380', ' 14,700', ' 9,000', ' 18,430',
+		' 15,420', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 13,080', ' 22,780',
+		' 12,410', ' 16,090', ' 9,860', ' 15,180', ' 13,790', ' 13,330', ' 20,000',
+		' 24,040', ' 18,100', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 16,090',
+		' 22,430', ' 22,900', null ]
+	}</code></pre>
+
+
+
+            
+                
+<h4 class="name" id="s0Log">s0Log</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>un</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the unit of the data 'Watt' or 'kWh'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the date/time of the first log entry. e.g. '2018-11-01T00:00:00'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the entry interval delta in seconds. e.g. 86400 (= 1 day)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an array containing the log entries. Closing entry is always null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>contains historic electricity Power data</p>
+</div>
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// daily power usage in the month November
+	{
+		un: 'kWh',
+		tm: '2018-11-01T00:00:00',
+		dt: 86400,
+		val: [' 24,770', ' 14,930', ' 16,270', ' 10,380', ' 14,700', ' 9,000', ' 18,430',
+		' 15,420', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 13,080', ' 22,780',
+		' 12,410', ' 16,090', ' 9,860', ' 15,180', ' 13,790', ' 13,330', ' 20,000',
+		' 24,040', ' 18,100', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 16,090',
+		' 22,430', ' 22,900', null ]
+	}</code></pre>
+
+
+
+            
     
 
     
@@ -1172,7 +1826,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 23 2018 22:34:50 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Nov 24 2018 14:43:23 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
