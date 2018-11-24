@@ -8,6 +8,7 @@
 * live energy and gas readings of P1 smart meters (LS120 only)
 * live readings of the S0 input (LS120 only)
 * live readings of the optical sensor
+* historic logs of power, gas and S0
 
 
 #### set:
