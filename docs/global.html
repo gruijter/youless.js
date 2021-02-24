@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -1228,16 +1228,16 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// daily gas usage in the month November
-	{
-		un: 'm3',
-		tm: '2018-11-01T00:00:00',
-		dt: 86400,
-		val: [' 5,580', ' 3,380', ' 4,350', ' 1,960', ' 3,130', ' 3,280', ' 2,500',
-		' 2,970', ' 3,780', ' 4,440', ' 2,860', ' 3,470', ' 2,300', ' 4,110',
-		' 2,940', ' 4,380', ' 4,860', ' 5,890', ' 5,480', ' 5,670', ' 3,790',
-		' 6,390', ' 7,450', ' 3,380', ' 4,350', ' 1,960', ' 3,130', ' 3,780',
-		' 5,480', ' 5,670', null ]
-	}</code></pre>
+{
+	un: 'm3',
+	tm: '2018-11-01T00:00:00',
+	dt: 86400,
+	val: [' 5,580', ' 3,380', ' 4,350', ' 1,960', ' 3,130', ' 3,280', ' 2,500',
+	' 2,970', ' 3,780', ' 4,440', ' 2,860', ' 3,470', ' 2,300', ' 4,110',
+	' 2,940', ' 4,380', ' 4,860', ' 5,890', ' 5,480', ' 5,670', ' 3,790',
+	' 6,390', ' 7,450', ' 3,380', ' 4,350', ' 1,960', ' 3,130', ' 3,780',
+	' 5,480', ' 5,670', null ]
+}</code></pre>
 
 
 
@@ -1601,16 +1601,151 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// daily power usage in the month November
-	{
-		un: 'kWh',
-		tm: '2018-11-01T00:00:00',
-		dt: 86400,
-		val: [' 24,770', ' 14,930', ' 16,270', ' 10,380', ' 14,700', ' 9,000', ' 18,430',
-		' 15,420', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 13,080', ' 22,780',
-		' 12,410', ' 16,090', ' 9,860', ' 15,180', ' 13,790', ' 13,330', ' 20,000',
-		' 24,040', ' 18,100', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 16,090',
-		' 22,430', ' 22,900', null ]
-	}</code></pre>
+{
+	un: 'kWh',
+	tm: '2018-11-01T00:00:00',
+	dt: 86400,
+	val: [' 24,770', ' 14,930', ' 16,270', ' 10,380', ' 14,700', ' 9,000', ' 18,430',
+	' 15,420', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 13,080', ' 22,780',
+	' 12,410', ' 16,090', ' 9,860', ' 15,180', ' 13,790', ' 13,330', ' 20,000',
+	' 24,040', ' 18,100', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 16,090',
+	' 22,430', ' 22,900', null ]
+}</code></pre>
+
+
+
+            
+                
+<h4 class="name" id="rawP1Status">rawP1Status</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rawP1Status</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>DSMR P1 text string</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>rawP1Status  is an object containing the raw string coming from the DSMR P1 interface.</p>
+</div>
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// rawP1Status
+/KMP5 ZABF001587315111     - start symbol and manufacturer/meter id
+
+0-0:96.1.1(205C4D246333034353537383234323121)      - serial number of meter in hex ascii
+1-0:1.8.1(00185.000*kWh)   - Total consumed from grid tarriff 1 (low/night)
+1-0:1.8.2(00084.000*kWh)   - Total consumed from grid tarriff 2 (high/day)
+1-0:2.8.1(00013.000*kWh)   - Total  delivered to grid tarriff 1 (low/night)
+1-0:2.8.2(00019.000*kWh)   - Total delivered to grid tarriff 2 (high/day)
+0-0:96.14.0(0001)          - Actual tarriff  (1 or 2)
+1-0:1.7.0(0000.98*kW)      - actual power used from grid
+1-0:2.7.0(0000.00*kW)      - actual power delivery to grid
+0-0:17.0.0(999*A)          - max current per phase
+0-0:96.3.10(1)             - switch status
+0-0:96.13.1()              - numeric message
+0-0:96.13.0()              - text message
+0-1:24.1.0(3)              - other devices on M-bus
+0-1:96.1.0(3238313031453631373038389930337131)      - serial number of gas meter in hex ascii
+0-1:24.3.0(120517020000)(08)(60)(1)(0-1:24.2.1)(m3) - yymmddhhmmss time of last gas update
+(00124.477)                - Total consumed gas
+0-1:24.4.0(1)              - gas switch status?
+!                          - end symbol and optional CRC16-IBM reversed</code></pre>
 
 
 
@@ -1795,16 +1930,263 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// daily power usage in the month November
-	{
-		un: 'kWh',
-		tm: '2018-11-01T00:00:00',
-		dt: 86400,
-		val: [' 24,770', ' 14,930', ' 16,270', ' 10,380', ' 14,700', ' 9,000', ' 18,430',
-		' 15,420', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 13,080', ' 22,780',
-		' 12,410', ' 16,090', ' 9,860', ' 15,180', ' 13,790', ' 13,330', ' 20,000',
-		' 24,040', ' 18,100', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 16,090',
-		' 22,430', ' 22,900', null ]
-	}</code></pre>
+{
+	un: 'kWh',
+	tm: '2018-11-01T00:00:00',
+	dt: 86400,
+	val: [' 24,770', ' 14,930', ' 16,270', ' 10,380', ' 14,700', ' 9,000', ' 18,430',
+	' 15,420', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 13,080', ' 22,780',
+	' 12,410', ' 16,090', ' 9,860', ' 15,180', ' 13,790', ' 13,330', ' 20,000',
+	' 24,040', ' 18,100', ' 22,430', ' 22,900', ' 17,820', ' 15,250', ' 16,090',
+	' 22,430', ' 22,900', null ]
+}</code></pre>
+
+
+
+            
+                
+<h4 class="name" id="sessionOptions">sessionOptions</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>''</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The login password (Only for LS120). Defaults to no password.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>host</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The url or ip address of the youless device. Leave undefined to try autodiscovery.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>port</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>80</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The port of the youless device. Defaults to 80.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>4000</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>http timeout in milliseconds. Defaults to 4000ms.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>Set of configurable options to set on the youless class or during login</p>
+</div>
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// session options
+{ password: 'mySecretPassword',
+  host:'10.0.0.12',
+  port: 80,
+  timeout: 5000,
+}</code></pre>
 
 
 
@@ -1826,7 +2208,7 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 11 2019 19:58:28 GMT+0200 (GMT+02:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Wed Feb 24 2021 14:05:31 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

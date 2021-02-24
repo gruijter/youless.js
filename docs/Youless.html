@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -62,7 +62,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Youless"><span class="type-signature"></span>new Youless<span class="signature">(password<span class="signature-attributes">opt</span>, host<span class="signature-attributes">opt</span>, port<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Youless"><span class="type-signature"></span>new Youless<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -194,24 +194,23 @@
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// create a youless session, login to device, fetch basic power info
-	const Youless = require('youless');
+const Youless = require('youless');
 
-	const youless = new Youless();
+const youless = new Youless();
 
-	async function getPower() {
-		try {
-			// fill in the password of the device. Use '' if no password is set in the device
-			// fill in the ip address of the device, e.g. '192.168.1.50'
-			// do not fill in an ip address if you want to autodiscover the device during login
-			await youless.login('devicePassword', 'deviceIp');
-			const powerInfo = await youless.getBasicInfo();
-			console.log(powerInfo);
-		} catch (error) {
-			console.log(error);
-		}
+async function getPower() {
+	try {
+		// Leave out password if no password is set in the device
+		// Leave out host if you want to autodiscover the device during login
+		await youless.login({ password = 'secretPassword', host = '192.168.1.50' });
+		const powerInfo = await youless.getBasicInfo();
+		console.log(powerInfo);
+	} catch (error) {
+		console.log(error);
 	}
+}
 
-	getPower();</code></pre>
+getPower();</code></pre>
 
 
 
@@ -233,8 +232,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -245,13 +242,13 @@
 
         <tr>
             
-                <td class="name"><code>password</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type"><a href="global.html#sessionOptions">sessionOptions</a></span>
 
 
             
@@ -270,90 +267,8 @@
             
 
             
-                <td class="default">
-                
-                    <code>''</code>
-                
-                </td>
-            
 
-            <td class="description last"><p>The login password.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>host</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The url or ip address of the router. Will be automatically discovered on first login.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>port</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>80</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>The port of the device</p></td>
+            <td class="description last"><p>configurable session options</p></td>
         </tr>
 
     
@@ -548,7 +463,7 @@ Also sets the ip address of the first discovered device as host address for this
 
 
 <div class="description">
-    <p>Get advanced power information. Only works on Enelogic (-EL) device firmware.</p>
+    <p>Get advanced power information.</p>
 </div>
 
 
@@ -1274,6 +1189,172 @@ Also sets the ip address of the first discovered device as host address for this
 
     
 
+    <h4 class="name" id="getRawP1Status"><span class="type-signature">(async) </span>getRawP1Status<span class="signature">(noCheck<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#rawP1Status">rawP1Status</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Get raw P1 information.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>noCheck</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>When set to true corrupt or incomplete responses will not throw an error</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#rawP1Status">rawP1Status</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
     <h4 class="name" id="getS0log"><span class="type-signature">(async) </span>getS0log<span class="signature">(resolution<span class="signature-attributes">opt</span>, period<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#s0Log">s0Log</a>>}</span></h4>
 
     
@@ -1485,7 +1566,7 @@ Also sets the ip address of the first discovered device as host address for this
 
     
 
-    <h4 class="name" id="login"><span class="type-signature">(async) </span>login<span class="signature">(password<span class="signature-attributes">opt</span>, host<span class="signature-attributes">opt</span>, port<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Youless.loggedIn>}</span></h4>
+    <h4 class="name" id="login"><span class="type-signature">(async) </span>login<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Youless.loggedIn>}</span></h4>
 
     
 
@@ -1532,7 +1613,7 @@ Also sets the ip address of the first discovered device as host address for this
 
 
 <div class="description">
-    <p>Login to the device. Passing parameters will override the previous settings.
+    <p>Login to the device. Passing sessionOptions will override the previous settings.
 If host is not set, login will try to auto discover it.</p>
 </div>
 
@@ -1563,8 +1644,6 @@ If host is not set, login will try to auto discover it.</p>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -1575,13 +1654,13 @@ If host is not set, login will try to auto discover it.</p>
 
         <tr>
             
-                <td class="name"><code>password</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type"><a href="global.html#sessionOptions">sessionOptions</a></span>
 
 
             
@@ -1600,88 +1679,8 @@ If host is not set, login will try to auto discover it.</p>
             
 
             
-                <td class="default">
-                
-                    <code>''</code>
-                
-                </td>
-            
 
-            <td class="description last"><p>The login password. NOTE: Only works for LS120.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>host</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The url or ip address of the device.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>port</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The  port of the device.</p></td>
+            <td class="description last"><p>configurable session options</p></td>
         </tr>
 
     
@@ -1788,6 +1787,152 @@ If host is not set, login will try to auto discover it.</p>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;finished></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setLuminace"><span class="type-signature">(async) </span>setLuminace<span class="signature">(value)</span><span class="type-signature"> &rarr; {Promise.&lt;finished>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Set the luminace of the optical sensor</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>0 = auto, 2 = low, 3 = high</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -2671,7 +2816,7 @@ NOTE: will be automatically overwritten by P1 net value</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 11 2019 19:58:28 GMT+0200 (GMT+02:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Wed Feb 24 2021 14:05:31 GMT+0100 (GMT+01:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
