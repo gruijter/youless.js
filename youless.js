@@ -116,7 +116,7 @@ class Youless {
 				}
 				return hostsToTest;
 			});
-			this.timeout = 3000;	// temporarily set http timeout to 3.5 seconds
+			this.timeout = 2000;	// temporarily set http timeout to 2 seconds
 			const allHostsPromise = hostsToTest.map(async (hostToTest) => {
 				const result = await this.getInfo(hostToTest)
 					.catch(() => undefined);
@@ -654,28 +654,33 @@ class Youless {
 		}
 	}
 
-	_makeHttpRequest(options, postData) {
+	_makeHttpRequest(options, postData, timeout) {
 		return new Promise((resolve, reject) => {
-			const req = http.request(options, (res) => {
+			const opts = options;
+			opts.timeout = timeout || this.timeout;
+			const req = http.request(opts, (res) => {
 				let resBody = '';
 				res.on('data', (chunk) => {
 					resBody += chunk;
 				});
 				res.once('end', () => {
+					if (!res.complete) {
+						return reject(Error('The connection was terminated while the message was still being sent'));
+					}
 					res.body = resBody;
 					return resolve(res); // resolve the request
 				});
 			});
-			req.write(postData);
-			req.end();
-			req.setTimeout(this.timeout, () => {
-				req.abort();
-				reject(Error('Connection timeout'));
+			req.on('error', (e) => {
+				req.destroy();
+				this.lastResponse = e;	// e.g. ECONNREFUSED on wrong soap port or wrong IP // ECONNRESET on wrong IP
+				return reject(e);
 			});
-			req.once('error', (e) => {
-				this.lastResponse = e;	// e.g. ECONNREFUSED // ECONNRESET // EHOSTUNREACH on wrong IP
-				reject(e);
+			req.on('timeout', () => {
+				req.destroy();
 			});
+			// req.write(postData);
+			req.end(postData);
 		});
 	}
 
