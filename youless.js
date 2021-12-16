@@ -732,7 +732,7 @@ getPower();
 * @property {string} [password = ''] - The login password (Only for LS120). Defaults to no password.
 * @property {string} [host] - The url or ip address of the youless device. Leave undefined to try autodiscovery.
 * @property {number} [port = 80] - The port of the youless device. Defaults to 80.
-* @property {number} [timeout = 4000] - http timeout in milliseconds. Defaults to 4000ms.
+* @property {number} [timeout = 10000] - http timeout in milliseconds. Defaults to 10000ms.
 * @property {boolean} [reversed = false] - Reverse the peak and offPeak meters. Required in Belgium.
 * @example // session options
 { password: 'mySecretPassword',
