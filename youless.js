@@ -2,7 +2,7 @@
 	License, v. 2.0. If a copy of the MPL was not distributed with this
 	file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-	Copyright 2017 - 2021, Robin de Gruijter <gruijter@hotmail.com> */
+	Copyright 2017 - 2022, Robin de Gruijter <gruijter@hotmail.com> */
 
 'use strict';
 
@@ -117,12 +117,8 @@ class Youless {
 				}
 				return hostsToTest;
 			});
-			this.timeout = 2000;	// temporarily set http timeout to 2 seconds
-			const allHostsPromise = hostsToTest.map(async (hostToTest) => {
-				const result = await this.getInfo(hostToTest)
-					.catch(() => undefined);
-				return result;
-			});
+			this.timeout = 4000;	// temporarily set http timeout to 4 seconds
+			const allHostsPromise = hostsToTest.map((hostToTest) => Promise.resolve(this.getInfo(hostToTest).catch(() => undefined)));
 			const allHosts = await Promise.all(allHostsPromise);
 			const discoveredHosts = allHosts.filter((host) => host);
 			this.timeout = timeoutBefore;	// reset the timeout
@@ -549,7 +545,11 @@ class Youless {
 	*/
 	async syncTime() {
 		try {
-			const res = await this._makeRequest(syncTimePath);
+			let res = await this._makeRequest(syncTimePath);
+
+			// correct for German GUI
+			res = res.replace('Tijd::', 'Zeit:');
+
 			const dateTimeDirty = res.body.match(regExTimeResponse)[1];
 			const dateTime = dateTimeDirty.replace(regExTagRemove, '');
 			return Promise.resolve(dateTime);
@@ -600,6 +600,11 @@ class Youless {
 			const res = await this._makeRequest(homePath);
 			const res2 = await this._makeRequest(networkPath);
 			this.host = hostBefore;
+
+			// correct for German GUI
+			res.body = res.body.replace('Modell:', 'Model:').replace('Firmware-Version:', 'Firmware versie:');
+			res2.body = res2.body.replace('MAC-Adresse:', 'MAC Adres:');
+
 			const model = res.body.match(regExModelResponse)[1];
 			info2.model = model.replace(regExTagRemove, '');
 			const mac = res2.body.match(regExMacResponse)[1];
