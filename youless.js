@@ -545,10 +545,10 @@ class Youless {
 	*/
 	async syncTime() {
 		try {
-			let res = await this._makeRequest(syncTimePath);
+			const res = await this._makeRequest(syncTimePath);
 
 			// correct for German GUI
-			res = res.replace('Tijd::', 'Zeit:');
+			res.body = res.body.replace('Tijd::', 'Zeit:');
 
 			const dateTimeDirty = res.body.match(regExTimeResponse)[1];
 			const dateTime = dateTimeDirty.replace(regExTagRemove, '');

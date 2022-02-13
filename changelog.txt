@@ -1,3 +1,4 @@
+2.5.1 - 13-02-2022 Fix syncTime.
 2.5.0 - 13-02-2022 Improved autodiscovery. Added support for german firmware.
 2.4.0 - 08-12-2021 Added reversed P1 (Belgian meters). Improved test.
 2.3.1 - 12-03-2021 Fixed http timeout setting.
