@@ -46,6 +46,9 @@ const s0LogPath = '/Z';	// add range h/w/d/m, selection, and json format. e.g. ?
 //  Only available for LS120 fw>-1.5:
 const P1StatusPath = '/f'; // Power, Voltage, Current per phase. Active Tariff.
 
+//  Only available for LS120 fw>-1.6:
+const setS0TimeoutPath = '/M?to='; // power pulse timeout in minutes. 0 = 30s.
+
 // Unknown where available
 const rawP1Path = '/V?p=';
 const setLumiPath = '/M?l=';
@@ -92,6 +95,7 @@ class Youless {
 			p1: undefined,
 			gas: undefined,
 			s0: undefined,
+			water: undefined,
 		};
 		this.lastResponse = undefined;
 	}
@@ -283,6 +287,12 @@ class Youless {
 				advancedStatus.ts0 = 0;
 				advancedStatus.ps0 = 0;
 				advancedStatus.cs0 = 0;
+			}
+			if (advancedStatus.wts) {	// water meter connected (BE fw>=v1.6)
+				this.hasMeter.water = true;
+				advancedStatus.wtm = toEpoch(advancedStatus.wts);
+			} else {	// no water meter available
+				this.hasMeter.water = false;
 			}
 			if (this.reversed) {
 				const tmp = { ...advancedStatus };
@@ -554,6 +564,20 @@ class Youless {
 		}
 	}
 
+	/**
+	* Set the Power pulses timeout
+	* @param {number} value - the timeout in minutes. 0 = 30s.
+	* @returns {Promise<finished>}
+	*/
+	async setS0Timeout(value) {
+		try {
+			const success = await this._makeRequest(setS0TimeoutPath + Number(value));
+			return Promise.resolve(success);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
 	// Het is eigenlijk meer een testfunctie, maar je kunt url /M?l=3 (luminance) gebruiken om de belichting
 	// op hoog te forceren (in de auto belichting wordt onder de 6% naar hoog geschakeld).
 	// De waarde 0 stelt overigens weer de default auto luminance in en de waarde 2 forceert op lage luminance (1 wordt niet gebruikt).
@@ -811,6 +835,7 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
 * @typedef advancedStatus
 * @description advancedStatus is an object containing power information.
 * @property {number} tm time of retrieving info. unix-time-format. e.g. 1542575626
+* @property {number} net total energy counter, consumption - production
 * @property {number} pwr power consumption in Watt. e.g. 3030
 * @property {number} [ts0] time of the last S0 measurement. unix-time-format. e.g. 1542575626 NOTE: only for LS120 ^1.4 version firmware
 * @property {number} [cs0] counter of S0 input (KwH). e.g. 0 NOTE: only for LS120 ^1.4 version firmware
@@ -822,6 +847,9 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
 * @property {number} gas counter gas-meter (in m^3). e.g. 6161.243
 * @property {number} [gts] time of the last gas measurement (yyMMddhhmm). e.g. 1811182200 NOTE: only for LS120 ^1.4 version firmware
 * @property {number} [gtm] time of the last gas measurement. unix-time-format. e.g. 1542574800 NOTE: only for LS120 ^1.4 version firmware
+* @property {number} [wtr] counter water-meter (in m^3). e.g. 6161.243 NOTE: only for LS120 ^1.6 version firmware and BE meters
+* @property {number} [wts] time of the last water measurement (yyMMddhhmm). e.g. 1811182200 NOTE: only for LS120 ^1.6 version firmware and BE meters
+* @property {number} [wtm] time of the last gas measurement. unix-time-format. e.g. 1542574800 NOTE: NOTE: only for LS120 ^1.6 version firmware and BE meters
 * @example // advancedStatus information
 { tm: 1543065732, net: 20289.512, pwr: 640, ts0: 1542562800, cs0: 12345, ps0: 0, p1: 16168.673,
 p2: 9942.712, n1: 1570.936, n2: 4250.937, gas: 6192.638, gts: 1811241400, gtm: 1543064400 }

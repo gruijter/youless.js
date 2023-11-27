@@ -164,14 +164,19 @@ async function doTest() {
 		// 	.catch((error) => logError(error));
 
 		// // set the S0 counter value (in KwH)
-		// log.push('trying to set the S0 counter (LS120-EL only)');
+		// log.push('trying to set the S0 counter (LS120 only)');
 		// await youless.setS0Counter(12345)
 		// 	.catch((error) => logError(error));
 
 		// // set the S0 pulses per KwH value NOTE: also resets powerPulses to 1000
-		// log.push('trying to set the S0 pulses (LS120-EL only)');
+		// log.push('trying to set the S0 pulses (LS120 only)');
 		// await youless.setS0Pulses(1000)
 		// 	.catch((error) => logError(error));
+
+		// set the S0 pulses timeout
+		log.push('trying to set the S0 timeout (LS120 only)');
+		await youless.setS0Timeout(5)
+			.catch((error) => logError(error));
 
 		// // set the Power counter value (in KwH) NOTE: also resets powerPulses to 1000
 		// await youless.setPowerCounter(12345)
