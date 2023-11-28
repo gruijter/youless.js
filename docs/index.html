@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getP1Status">getP1Status</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#setS0Timeout">setS0Timeout</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getP1Status">getP1Status</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#getWaterlog">getWaterlog</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#setS0Timeout">setS0Timeout</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -57,13 +57,15 @@
 <li>device information, including firmware version</li>
 <li>live energy readings of analogue and digital meters</li>
 <li>live energy and gas readings of P1 smart meters (LS120 only)</li>
+<li>live water readings of P1 smart meters (LS120 with Belgium meters only)</li>
 <li>live readings of the S0 input (LS120 only)</li>
 <li>live readings of the optical sensor</li>
 <li>live P1 tariff, power, voltage, current readings per phase (LS120 only)</li>
 <li>raw P1 data (Experimental and unstable!)</li>
 <li>historic logs of power</li>
-<li>historic log of gas (LS120 only)</li>
-<li>historic log of S0 (LS120 only)</li>
+<li>historic logs of gas (LS120 only)</li>
+<li>historic logs of S0 (LS120 only)</li>
+<li>historic logs of water (LS120 only)</li>
 </ul>
 <h4>set:</h4>
 <ul>
@@ -72,6 +74,7 @@
 <li>power counter value</li>
 <li>S0 pulses per KwH value (LS120 only)</li>
 <li>S0 counter value (LS120 only)</li>
+<li>S0 counter timeout (LS120 only)</li>
 <li>optical sensor luminance</li>
 </ul>
 <h4>do:</h4>
@@ -82,7 +85,7 @@
 <li>reboot the device (LS120 only)</li>
 </ul>
 <h3>Note:</h3>
-<p>This package has been developed and tested with the Enelogic (-EL) firmware and PVOutput (-PO) firmware ^1.4.4.
+<p>This package has been developed and tested with the Enelogic (-EL) firmware and PVOutput (-PO) firmware ^1.6.0.
 Other firmware versions (-EO, and -PO below 1.4.4) might not be fully supported, especially for the function getAdvancedStatus().</p>
 <h3>Install:</h3>
 <p>If you don't have Node installed yet, get it from: <a href="https://nodejs.org" title="Nodejs website">Nodejs.org</a>.</p>
@@ -126,7 +129,7 @@ async function getPower() {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Mon Nov 27 2023 19:02:12 GMT+0100 (Midden-Europese standaardtijd) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Nov 28 2023 16:37:16 GMT+0100 (Midden-Europese standaardtijd) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

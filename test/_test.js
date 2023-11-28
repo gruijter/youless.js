@@ -138,7 +138,16 @@ async function doTest() {
 			.catch((error) => logError(error));
 		log.push(`t = ${(Date.now() - t0) / 1000}`);
 
-		// get S0 log of the present month
+		// get water log of the present month
+		log.push('trying to get historic water log of present month (LS120 in BE only)');
+		await youless.getWaterlog()
+			.then((waterLog) => {
+				log.push(waterLog);
+			})
+			.catch((error) => logError(error));
+		log.push(`t = ${(Date.now() - t0) / 1000}`);
+
+		// get raw P1 status
 		log.push('trying to get the raw P1 status');
 		await youless.getRawP1Status({ noCheck: true })
 			.then((rawP1Status) => {
@@ -174,9 +183,9 @@ async function doTest() {
 		// 	.catch((error) => logError(error));
 
 		// set the S0 pulses timeout
-		log.push('trying to set the S0 timeout (LS120 only)');
-		await youless.setS0Timeout(5)
-			.catch((error) => logError(error));
+		// log.push('trying to set the S0 timeout (LS120 only)');
+		// await youless.setS0Timeout(5)
+		// 	.catch((error) => logError(error));
 
 		// // set the Power counter value (in KwH) NOTE: also resets powerPulses to 1000
 		// await youless.setPowerCounter(12345)

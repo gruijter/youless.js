@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getP1Status">getP1Status</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#setS0Timeout">setS0Timeout</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getP1Status">getP1Status</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#getWaterlog">getWaterlog</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#setS0Timeout">setS0Timeout</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -1601,6 +1601,8 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -1609,29 +1611,6 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
     </thead>
 
     <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>ver</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>P1 interface version e.g. 50</p></td>
-        </tr>
-
     
 
         <tr>
@@ -1649,10 +1628,109 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>Active tariff. 1 = high, 2 = low</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pa</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>power peak 15 minutes (Watt, BE only), e.g. 120</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>power peak month (Watt, BE only), e.g. 1280</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>date and time of peak (yyMMddhhmm, BE only), e.g. 2311181715</p></td>
         </tr>
 
     
@@ -1671,6 +1749,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -1695,6 +1779,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -1717,6 +1807,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -1741,6 +1837,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -1763,6 +1865,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -1787,6 +1895,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -1809,6 +1923,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -1833,6 +1953,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -1856,6 +1982,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -1878,6 +2010,12 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -1907,7 +2045,7 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// P1Status information
-{ ver: 50, tr: 2, i1: 5.000, i2: 0.000, i3: 0.000, v1: 238.400, v2: 0.000, v3: 0.000, l1:-1129, l2: 0, l3: 0, tm: 1543065737 }</code></pre>
+{ tr: 2, i1: 5.000, i2: 0.000, i3: 0.000, v1: 238.400, v2: 0.000, v3: 0.000, l1:-1129, l2: 0, l3: 0, tm: 1543065737 }</code></pre>
 
 
 
@@ -2725,6 +2863,212 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
 
 
             
+                
+<h4 class="name" id="waterLog">waterLog</h4>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>un</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the unit of the data 'm3' or 'L' (liter)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the date/time of the first log entry. e.g. '2018-11-01T00:00:00'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the entry interval delta in seconds. e.g. 86400 (= 1 day)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an array containing the log entries. Closing entry is always null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>contains historic water usage data</p>
+</div>
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// daily water usage in the month November
+{
+  un: 'm3',
+  tm: '2023-11-01T00:00:00',
+  dt: 86400,
+  val: [
+    ' 0,160', ' 0,450', ' 0,100',
+    ' 0,550', ' 0,290', ' 0,210',
+    ' 0,190', ' 0,170', ' 0,200',
+    ' 0,220', ' 0,220', ' 0,170',
+    ' 0,110', ' 0,140', ' 0,150',
+    ' 0,200', ' 0,240', ' 0,240',
+    ' 0,160', ' 0,140', ' 0,270',
+    ' 0,110', ' 0,330', ' 0,130',
+    ' 0,000', ' 0,030', ' 0,150',
+    null
+  ]
+}
+/*
+more detailed information on:
+
+Youless: http://wiki.td-er.nl/index.php?title=YouLess
+DSMR: http://domoticx.com/p1-poort-slimme-meter-hardware/:</code></pre>
+
+
+
+            
     
 
     
@@ -2742,7 +3086,7 @@ sts: '(17)', cs0: ' 12345,0000', ps0: 0, raw: 627, net: 20289.512, tm: 154306573
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Mon Nov 27 2023 19:02:12 GMT+0100 (Midden-Europese standaardtijd) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Nov 28 2023 16:37:16 GMT+0100 (Midden-Europese standaardtijd) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

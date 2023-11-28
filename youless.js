@@ -37,6 +37,7 @@ const rebootPath = '/S?rb=';
 const discoverPath = '/d';
 const advancedStatusPath = '/e';
 const gasLogPath = '/W';	// add range w/d/m, selection, and json format. e.g. ?d=70&f=j
+const waterLogPath = '/K';	// add range w/d/m, selection, and json format. e.g. ?d=70&f=j
 
 //  Only available for LS120 fw>-1.4:
 const setS0PulsesPath = '/M?s='; // add pulses per kWh, e.g. /M?&s=1000
@@ -489,6 +490,44 @@ class Youless {
 	}
 
 	/**
+	* Get historic water usage data. Note: Only available for LS120 and with Belgian meters.
+	* @param {string} [resolution = 'Days'] - The interval of logdata in: T(enminutes), H(ours) or D(ays)
+	* @param {number} [period = this month] - The period that can be selected for historic data depends on the selected resolution:
+	* - Tenminutes: period 1 (this day) - 30 (30 days ago)
+	* - Hours: period 1 (this day) - 70 (70 days ago)
+	* - Days: period 1 (January) - 12 (December)
+	* @returns {Promise<waterLog>}
+	*/
+	async getWaterlog(resolution, period) {
+		try {
+			const res = resolution || 'd';	// defaults to days
+			const now = new Date();
+			const thisMonth = now.getMonth() + 1;
+			const per = Number(period) || thisMonth; // defaults to this month
+			let range;
+			switch (res[0].toLowerCase()) {
+				case 't':
+					range = 'w';
+					break;
+				case 'h':
+					range = 'd';
+					break;
+				case 'd':
+					range = 'm';
+					break;
+				default:
+					throw Error('The resolution can only be T(enminutes), H(ours) or D(ays)');
+			}
+			const getWaterlogPath = `${waterLogPath}?${range}=${per}&f=j`;
+			const result = await this._makeRequest(getWaterlogPath);
+			const gasLog = JSON.parse(result.body);
+			return Promise.resolve(gasLog);
+		} catch (error) {
+			return Promise.reject(error);
+		}
+	}
+
+	/**
 	* Set meter type to D(igital) or A(nalog).
 	* @param {string} value - The meter type A(analog) or D(igital).
 	* @returns {Promise<finished>}
@@ -858,8 +897,10 @@ p2: 9942.712, n1: 1570.936, n2: 4250.937, gas: 6192.638, gts: 1811241400, gtm: 1
 /**
 * @typedef P1Status
 * @description P1Status is an object containing P1 version, tariff and current/voltage/power information per phase.
-* @property {number} ver P1 interface version e.g. 50
 * @property {number} tr Active tariff. 1 = high, 2 = low
+* @property {number} [pa] power peak 15 minutes (Watt, BE only), e.g. 120
+* @property {number} [pp] power peak month (Watt, BE only), e.g. 1280
+* @property {number} [pts] date and time of peak (yyMMddhhmm, BE only), e.g. 2311181715
 * @property {number} i1 phase 1 current (Ampere), e.g. 5.000
 * @property {number} i2 phase 2 current (Ampere), e.g. 5.000
 * @property {number} i3 phase 3 current (Ampere), e.g. 5.000
@@ -871,7 +912,7 @@ p2: 9942.712, n1: 1570.936, n2: 4250.937, gas: 6192.638, gts: 1811241400, gtm: 1
 * @property {number} l3 phase 3 power (Watt), e.g. 1129
 * @property {number} tm time of retrieving info. unix-time-format. e.g. 1542575626
 * @example // P1Status information
-{ ver: 50, tr: 2, i1: 5.000, i2: 0.000, i3: 0.000, v1: 238.400, v2: 0.000, v3: 0.000, l1:-1129, l2: 0, l3: 0, tm: 1543065737 }
+{ tr: 2, i1: 5.000, i2: 0.000, i3: 0.000, v1: 238.400, v2: 0.000, v3: 0.000, l1:-1129, l2: 0, l3: 0, tm: 1543065737 }
 */
 
 /**
@@ -990,6 +1031,31 @@ p2: 9942.712, n1: 1570.936, n2: 4250.937, gas: 6192.638, gts: 1811241400, gtm: 1
 }
 */
 
+/**
+* @typedef waterLog
+* @description contains historic water usage data
+* @property {string} un - the unit of the data 'm3' or 'L' (liter)
+* @property {string} tm  - the date/time of the first log entry. e.g. '2018-11-01T00:00:00'
+* @property {number} dt - the entry interval delta in seconds. e.g. 86400 (= 1 day)
+* @property {Array.string} val - an array containing the log entries. Closing entry is always null
+* @example // daily water usage in the month November
+{
+  un: 'm3',
+  tm: '2023-11-01T00:00:00',
+  dt: 86400,
+  val: [
+    ' 0,160', ' 0,450', ' 0,100',
+    ' 0,550', ' 0,290', ' 0,210',
+    ' 0,190', ' 0,170', ' 0,200',
+    ' 0,220', ' 0,220', ' 0,170',
+    ' 0,110', ' 0,140', ' 0,150',
+    ' 0,200', ' 0,240', ' 0,240',
+    ' 0,160', ' 0,140', ' 0,270',
+    ' 0,110', ' 0,330', ' 0,130',
+    ' 0,000', ' 0,030', ' 0,150',
+    null
+  ]
+}
 /*
 more detailed information on:
 

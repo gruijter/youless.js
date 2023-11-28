@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getP1Status">getP1Status</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#setS0Timeout">setS0Timeout</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Youless.html">Youless</a><ul class='methods'><li data-type='method'><a href="Youless.html#discover">discover</a></li><li data-type='method'><a href="Youless.html#getAdvancedStatus">getAdvancedStatus</a></li><li data-type='method'><a href="Youless.html#getBasicStatus">getBasicStatus</a></li><li data-type='method'><a href="Youless.html#getGaslog">getGaslog</a></li><li data-type='method'><a href="Youless.html#getInfo">getInfo</a></li><li data-type='method'><a href="Youless.html#getP1Status">getP1Status</a></li><li data-type='method'><a href="Youless.html#getPowerlog">getPowerlog</a></li><li data-type='method'><a href="Youless.html#getRawP1Status">getRawP1Status</a></li><li data-type='method'><a href="Youless.html#getS0log">getS0log</a></li><li data-type='method'><a href="Youless.html#getWaterlog">getWaterlog</a></li><li data-type='method'><a href="Youless.html#login">login</a></li><li data-type='method'><a href="Youless.html#reboot">reboot</a></li><li data-type='method'><a href="Youless.html#setLuminace">setLuminace</a></li><li data-type='method'><a href="Youless.html#setMeterType">setMeterType</a></li><li data-type='method'><a href="Youless.html#setPowerCounter">setPowerCounter</a></li><li data-type='method'><a href="Youless.html#setPowerPulses">setPowerPulses</a></li><li data-type='method'><a href="Youless.html#setS0Counter">setS0Counter</a></li><li data-type='method'><a href="Youless.html#setS0Pulses">setS0Pulses</a></li><li data-type='method'><a href="Youless.html#setS0Timeout">setS0Timeout</a></li><li data-type='method'><a href="Youless.html#syncTime">syncTime</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -1663,6 +1663,216 @@ Also sets the ip address of the first discovered device as host address for this
 
     
 
+    <h4 class="name" id="getWaterlog"><span class="type-signature">(async) </span>getWaterlog<span class="signature">(resolution<span class="signature-attributes">opt</span>, period<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#waterLog">waterLog</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Get historic water usage data. Note: Only available for LS120 and with Belgian meters.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resolution</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'Days'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The interval of logdata in: T(enminutes), H(ours) or D(ays)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>period</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>this month</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The period that can be selected for historic data depends on the selected resolution:</p>
+<ul>
+<li>Tenminutes: period 1 (this day) - 30 (30 days ago)</li>
+<li>Hours: period 1 (this day) - 70 (70 days ago)</li>
+<li>Days: period 1 (January) - 12 (December)</li>
+</ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#waterLog">waterLog</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
     <h4 class="name" id="login"><span class="type-signature">(async) </span>login<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Youless.loggedIn>}</span></h4>
 
     
@@ -3059,7 +3269,7 @@ NOTE: will be automatically overwritten by P1 net value</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Mon Nov 27 2023 19:02:12 GMT+0100 (Midden-Europese standaardtijd) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Nov 28 2023 16:37:16 GMT+0100 (Midden-Europese standaardtijd) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
